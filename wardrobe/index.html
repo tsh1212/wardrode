@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>私人智能衣橱</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👔 私人智能衣橱</h1>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="wardrobe">我的衣橱</button>
+                <button class="tab-btn" data-tab="add-item">添加衣物</button>
+                <button class="tab-btn" data-tab="purchase">购买记录</button>
+                <button class="tab-btn" data-tab="style">穿衣风格</button>
+                <button class="tab-btn" data-tab="recommend">今日推荐</button>
+            </nav>
+        </header>
+
+        <!-- 我的衣橱页面 -->
+        <section id="wardrobe" class="tab-content active">
+            <div class="section-header">
+                <h2>我的衣橱</h2>
+                <div class="filter-controls">
+                    <select id="categoryFilter">
+                        <option value="">所有类别</option>
+                        <option value="上衣">上衣</option>
+                        <option value="下装">下装</option>
+                        <option value="外套">外套</option>
+                        <option value="鞋子">鞋子</option>
+                        <option value="配饰">配饰</option>
+                    </select>
+                    <select id="seasonFilter">
+                        <option value="">所有季节</option>
+                        <option value="春">春季</option>
+                        <option value="夏">夏季</option>
+                        <option value="秋">秋季</option>
+                        <option value="冬">冬季</option>
+                    </select>
+                </div>
+            </div>
+            <div id="wardrobeGrid" class="wardrobe-grid">
+                <!-- 衣物卡片将动态插入这里 -->
+            </div>
+        </section>
+
+        <!-- 添加衣物页面 -->
+        <section id="add-item" class="tab-content">
+            <h2>添加新衣物</h2>
+            <div class="camera-section">
+                <button type="button" id="cameraBtn" class="btn btn-camera">
+                    📷 拍照添加
+                </button>
+                <p class="camera-hint">或使用下方表单手动添加</p>
+            </div>
+            <form id="addItemForm" class="form">
+                <div class="form-group">
+                    <label for="itemName">衣物名称 *</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemCategory">类别 *</label>
+                    <select id="itemCategory" required>
+                        <option value="">请选择</option>
+                        <option value="上衣">上衣</option>
+                        <option value="下装">下装</option>
+                        <option value="外套">外套</option>
+                        <option value="鞋子">鞋子</option>
+                        <option value="配饰">配饰</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemColor">颜色</label>
+                    <input type="text" id="itemColor" placeholder="例如：黑色、白色、蓝色">
+                </div>
+                <div class="form-group">
+                    <label for="itemBrand">品牌</label>
+                    <input type="text" id="itemBrand">
+                </div>
+                <div class="form-group">
+                    <label for="itemSeason">适用季节 *</label>
+                    <select id="itemSeason" required>
+                        <option value="">请选择</option>
+                        <option value="春">春季</option>
+                        <option value="夏">夏季</option>
+                        <option value="秋">秋季</option>
+                        <option value="冬">冬季</option>
+                        <option value="四季">四季</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemStyle">风格标签</label>
+                    <div class="style-tags">
+                        <label><input type="checkbox" value="休闲"> 休闲</label>
+                        <label><input type="checkbox" value="正式"> 正式</label>
+                        <label><input type="checkbox" value="运动"> 运动</label>
+                        <label><input type="checkbox" value="时尚"> 时尚</label>
+                        <label><input type="checkbox" value="简约"> 简约</label>
+                        <label><input type="checkbox" value="复古"> 复古</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="itemPhoto">照片</label>
+                    <input type="file" id="itemPhoto" accept="image/*" capture="environment">
+                    <div id="photoPreview" class="photo-preview"></div>
+                </div>
+                <div class="form-group">
+                    <label for="itemNotes">备注</label>
+                    <textarea id="itemNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">添加衣物</button>
+            </form>
+        </section>
+
+        <!-- 购买记录页面 -->
+        <section id="purchase" class="tab-content">
+            <h2>购买记录</h2>
+            <button id="addPurchaseBtn" class="btn btn-primary">添加购买记录</button>
+            <div id="purchaseList" class="purchase-list">
+                <!-- 购买记录将动态插入这里 -->
+            </div>
+        </section>
+
+        <!-- 穿衣风格页面 -->
+        <section id="style" class="tab-content">
+            <h2>我的穿衣风格偏好</h2>
+            <div class="style-preference">
+                <div class="form-group">
+                    <label>主要风格偏好（可多选）</label>
+                    <div class="style-tags">
+                        <label><input type="checkbox" name="preferredStyle" value="休闲"> 休闲</label>
+                        <label><input type="checkbox" name="preferredStyle" value="正式"> 正式</label>
+                        <label><input type="checkbox" name="preferredStyle" value="运动"> 运动</label>
+                        <label><input type="checkbox" name="preferredStyle" value="时尚"> 时尚</label>
+                        <label><input type="checkbox" name="preferredStyle" value="简约"> 简约</label>
+                        <label><input type="checkbox" name="preferredStyle" value="复古"> 复古</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="colorPreference">颜色偏好</label>
+                    <input type="text" id="colorPreference" placeholder="例如：黑色、白色、蓝色">
+                </div>
+                <button id="saveStyleBtn" class="btn btn-primary">保存偏好设置</button>
+            </div>
+        </section>
+
+        <!-- 今日推荐页面 -->
+        <section id="recommend" class="tab-content">
+            <h2>今日穿搭推荐</h2>
+            <div class="weather-section">
+                <div class="form-group">
+                    <label for="currentWeather">当前天气</label>
+                    <select id="currentWeather">
+                        <option value="晴天">晴天</option>
+                        <option value="多云">多云</option>
+                        <option value="雨天">雨天</option>
+                        <option value="雪天">雪天</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="currentSeason">当前季节</label>
+                    <select id="currentSeason">
+                        <option value="春">春季</option>
+                        <option value="夏">夏季</option>
+                        <option value="秋">秋季</option>
+                        <option value="冬">冬季</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="currentTemp">温度 (°C)</label>
+                    <input type="number" id="currentTemp" placeholder="例如：25">
+                </div>
+                <button id="getRecommendationBtn" class="btn btn-primary">获取推荐</button>
+            </div>
+            <div id="recommendationResult" class="recommendation-result">
+                <!-- 推荐结果将显示在这里 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- 拍照模态框 -->
+    <div id="cameraModal" class="modal">
+        <div class="modal-content camera-modal-content">
+            <span class="close" id="closeCamera">&times;</span>
+            <h2>拍照添加衣物</h2>
+            <div id="cameraContainer" class="camera-container">
+                <video id="cameraVideo" autoplay playsinline></video>
+                <canvas id="cameraCanvas" style="display: none;"></canvas>
+                <div id="cameraControls" class="camera-controls">
+                    <button id="captureBtn" class="btn btn-capture">📷 拍照</button>
+                    <button id="switchCameraBtn" class="btn btn-switch">🔄 切换</button>
+                    <button id="cancelCameraBtn" class="btn btn-cancel">取消</button>
+                </div>
+            </div>
+            <div id="cameraPreview" class="camera-preview" style="display: none;">
+                <img id="capturedImage" alt="拍摄的照片">
+                <div class="analysis-loading" id="analysisLoading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>正在分析衣物信息...</p>
+                </div>
+                <div id="analysisResult" class="analysis-result" style="display: none;"></div>
+                <div class="camera-preview-controls">
+                    <button id="retakeBtn" class="btn btn-secondary">重拍</button>
+                    <button id="usePhotoBtn" class="btn btn-primary">使用此照片</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加购买记录模态框 -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>添加购买记录</h2>
+            <form id="purchaseForm">
+                <div class="form-group">
+                    <label for="purchaseItem">关联衣物</label>
+                    <select id="purchaseItem">
+                        <option value="">选择衣物</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="purchaseDate">购买日期 *</label>
+                    <input type="date" id="purchaseDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="purchasePrice">价格 (元) *</label>
+                    <input type="number" id="purchasePrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="purchaseStore">购买地点</label>
+                    <input type="text" id="purchaseStore">
+                </div>
+                <div class="form-group">
+                    <label for="purchaseNotes">备注</label>
+                    <textarea id="purchaseNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">保存记录</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
